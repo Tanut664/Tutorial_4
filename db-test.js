@@ -1,0 +1,19 @@
+const { MongoClient } = require('mongodb');
+
+const MONGO_URL = 'mongodb://127.0.0.1:27017';
+const DATABASE_NAME = 'account-db';
+
+async function main() {
+  const client = new MongoClient(MONGO_URL);
+  try {
+    await client.connect();
+    console.log('เชื่อมต่อ MongoDB สำเร็จ');
+    const db = client.db(DATABASE_NAME);
+    const users = db.collection('users');
+    console.log('จำนวนสมาชิก:', await users.countDocuments());
+  } finally {
+    await client.close();
+  }
+}
+
+main().catch(console.error);

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ระบบสมาชิก | MongoDB Workshop</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #172033; background: #f3f6fb; }
+    * { box-sizing: border-box; }
+    body { max-width: 980px; margin: 32px auto; padding: 0 18px 48px; }
+    header { padding: 26px; border-radius: 18px; color: white; background: linear-gradient(130deg,#123a70,#2476a8); margin-bottom: 20px; }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; opacity: .9; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 18px; }
+    section { background: white; padding: 22px; border-radius: 16px; box-shadow: 0 5px 18px #122b4a0d; margin-bottom: 18px; }
+    h2 { margin-top: 0; font-size: 1.2rem; }
+    form { display: grid; gap: 10px; }
+    input { width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 9px; font: inherit; }
+    button { padding: 10px 14px; border: 0; border-radius: 9px; background: #1769aa; color: white; cursor: pointer; font: inherit; }
+    button:hover { background: #0d4f86; }
+    button.danger { background: #b42332; padding: 7px 10px; }
+    #message { padding: 12px 14px; border-radius: 10px; background: #e8f1fb; min-height: 22px; }
+    #message.success { color: #12643a; background: #e6f7ed; }
+    #message.error { color: #9d1c2a; background: #ffebed; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 11px 9px; border-bottom: 1px solid #e4e9f0; }
+    th { background: #f7f9fc; }
+    .muted { color: #667085; font-size: .92rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ระบบสมาชิก</h1>
+    <p>ตัวอย่างการใช้ Node.js, Express.js และ MongoDB</p>
+  </header>
+
+  <p id="message" role="status">กำลังโหลดข้อมูลสมาชิก...</p>
+
+  <div class="grid">
+    <section>
+      <h2>สมัครสมาชิก</h2>
+      <form id="register-form">
+        <input name="username" placeholder="username (a-z, 0-9, _)" pattern="[a-z0-9_]{3,20}" minlength="3" maxlength="20" required>
+        <input name="name" placeholder="ชื่อ-นามสกุล" maxlength="100" required>
+        <input name="email" type="email" placeholder="อีเมล" maxlength="254" required>
+        <input name="password" type="password" placeholder="รหัสผ่านอย่างน้อย 8 ตัว" minlength="8" required>
+        <button type="submit">สมัครสมาชิก</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>เข้าสู่ระบบ</h2>
+      <form id="login-form">
+        <input name="username" placeholder="username" required>
+        <input name="password" type="password" placeholder="รหัสผ่าน" required>
+        <button type="submit">เข้าสู่ระบบ</button>
+      </form>
+      <p class="muted">บัญชีทดลองหลังสมัคร: ใช้ username และรหัสผ่านที่ตั้งไว้</p>
+    </section>
+  </div>
+
+  <section>
+    <h2>สมาชิกทั้งหมด</h2>
+    <p class="muted">ตารางนี้ไม่แสดง passwordHash เพื่อไม่เปิดเผยข้อมูลรับรอง</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Username</th><th>ชื่อ</th><th>อีเมล</th><th>Role</th><th>จัดการ</th></tr></thead>
+        <tbody id="user-table"></tbody>
+      </table>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
